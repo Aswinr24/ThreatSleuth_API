@@ -13,7 +13,6 @@ from nltk.stem import PorterStemmer
 import string
 import sklearn
 
-nltk.download('punkt')
 
 stemmer = PorterStemmer()
 
@@ -41,7 +40,7 @@ app.add_middleware(
 
 def transform(text):
     text = text.lower()
-    text = nltk.word_tokenize(text)
+    text = nltk.word_tokenize(text, language='english', preserve_line=True)
     current = []
     for i in text:
         if i.isalnum():
