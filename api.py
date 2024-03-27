@@ -13,6 +13,7 @@ from nltk.stem import PorterStemmer
 import string
 import sklearn
 
+stopwords = nltk.corpus.stopwords.words('english')
 
 stemmer = PorterStemmer()
 
