@@ -11,8 +11,11 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import string
-from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
+from stop_words import get_stop_words
 import sklearn
+
+
+stop_words = get_stop_words('english')
 
 stemmer = PorterStemmer()
 
@@ -48,7 +51,7 @@ def transform(text):
     text = current[:]
     current.clear()
     for i in text:
-        if i not in ENGLISH_STOP_WORDS and i not in string.punctuation:
+        if i not in stop_words and i not in string.punctuation:
             current.append(i)
     for i in text:
         current.append(stemmer.stem(i))
