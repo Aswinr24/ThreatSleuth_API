@@ -13,6 +13,8 @@ from nltk.stem import PorterStemmer
 import string
 import sklearn
 
+nltk.download('punkt')
+
 stemmer = PorterStemmer()
 
 app = FastAPI()
