@@ -13,7 +13,7 @@ from nltk.stem import PorterStemmer
 import string
 import sklearn
 
-stopwords = nltk.corpus.stopwords.words('english')
+stop_words = set(stopwords.words('english'))
 
 stemmer = PorterStemmer()
 
@@ -49,7 +49,7 @@ def transform(text):
     text = current[:]
     current.clear()
     for i in text:
-        if i not in stopwords.words('english') and i not in string.punctuation:
+        if i not in stop_words and i not in string.punctuation:
             current.append(i)
     for i in text:
         current.append(stemmer.stem(i))
