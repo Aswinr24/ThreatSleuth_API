@@ -11,6 +11,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import string
+import sklearn
 
 stemmer = PorterStemmer()
 
@@ -128,7 +129,7 @@ async def read_root() -> dict:
 @app.post("/predict/url")
 async def url_check(text: URLInput) -> dict:
     data=process_input(text.url)
-    RF_spamURL_classifier = open('models\RF_malaciousURL_classifier.pkl','rb')
+    RF_spamURL_classifier = open('RF_malaciousURL_classifier.pkl','rb')
     model = joblib.load(RF_spamURL_classifier)
     pred=model.predict(data)
     pred=pred.tolist()
@@ -139,9 +140,9 @@ async def url_check(text: URLInput) -> dict:
 @app.post("/predict/email")
 async def email_check(text: emailInput) -> dict:
     data=[transform(text.email)]
-    vectorizer=joblib.load('models\Vectorizer_mail.pkl')
+    vectorizer=joblib.load('Vectorizer_mail.pkl')
     data = vectorizer.transform(data)
-    SVC_spamMail_classifier= open('models\SVC_spamMail_classifier.pkl','rb')
+    SVC_spamMail_classifier= open('SVC_spamMail_classifier.pkl','rb')
     model = joblib.load(SVC_spamMail_classifier)
     pred=model.predict(data)
     pred=pred.tolist()
@@ -152,9 +153,9 @@ async def email_check(text: emailInput) -> dict:
 @app.post("/predict/msg")
 async def msg_check(text: msgInput) -> dict:
     data=[transform(text.msg)]
-    vectorizer=joblib.load('models\Vectorizer_msg.pkl')
+    vectorizer=joblib.load('Vectorizer_msg.pkl')
     data = vectorizer.transform(data)
-    SGDC_spamMSG_classifier = open('models\SGDC_spamMSG_classifier.pkl','rb')
+    SGDC_spamMSG_classifier = open('SGDC_spamMSG_classifier.pkl','rb')
     model = joblib.load(SGDC_spamMSG_classifier)
     pred=model.predict(data)
     pred=pred.tolist()
