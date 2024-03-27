@@ -6,5 +6,6 @@ WORKDIR /
 
 RUN pip install --no-cache-dir --upgrade -r /requirements.txt
 
+RUN [ "python", "-c", "import nltk; nltk.download('all')" ]
 
 CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "7860"]
