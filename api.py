@@ -11,15 +11,13 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import string
-from stop_words import get_stop_words
 import sklearn
-
-
-stop_words = get_stop_words('english')
+from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
 
 stemmer = PorterStemmer()
 
 app = FastAPI()
+
 
 class URLInput(BaseModel):
     url: str
@@ -43,7 +41,7 @@ app.add_middleware(
 
 def transform(text):
     text = text.lower()
-    text = nltk.word_tokenize(text, language='english', preserve_line=True)
+    text = nltk.word_tokenize(text)
     current = []
     for i in text:
         if i.isalnum():
@@ -51,7 +49,7 @@ def transform(text):
     text = current[:]
     current.clear()
     for i in text:
-        if i not in stop_words and i not in string.punctuation:
+        if i not in ENGLISH_STOP_WORDS and i not in string.punctuation:
             current.append(i)
     for i in text:
         current.append(stemmer.stem(i))
